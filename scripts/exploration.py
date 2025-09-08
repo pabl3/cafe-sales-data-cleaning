@@ -3,6 +3,7 @@ import json
 import argparse
 from pathlib import Path
 
+
 def generate_reports(input_file, md_out, json_out):
     # === 1. Cargar dataset ===
     df = pd.read_csv(input_file)
@@ -32,7 +33,7 @@ def generate_reports(input_file, md_out, json_out):
     for col in df.columns:
         # Ejemplo: valores no numéricos en columnas que parecen numéricas
         if col in ["Quantity", "Price Per Unit", "Total Spent"]:
-            non_numeric = df[~df[col].str.replace(".", "", 1).str.isnumeric()][col].unique()
+            non_numeric = df[~df[col].astype(str).str.replace(".", "", 1).str.isnumeric()][col].unique()
             issues[col] = {"non_numeric_values": non_numeric.tolist()}
 
         # Ejemplo: valores desconocidos
