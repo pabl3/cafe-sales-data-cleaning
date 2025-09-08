@@ -1,0 +1,85 @@
+{
+    "basic_info": {
+        "rows": 10000,
+        "columns": 8,
+        "column_names": [
+            "Transaction ID",
+            "Item",
+            "Quantity",
+            "Price Per Unit",
+            "Total Spent",
+            "Payment Method",
+            "Location",
+            "Transaction Date"
+        ]
+    },
+    "missing_values": {
+        "Transaction ID": 0,
+        "Item": 333,
+        "Quantity": 138,
+        "Price Per Unit": 179,
+        "Total Spent": 173,
+        "Payment Method": 2579,
+        "Location": 3265,
+        "Transaction Date": 159
+    },
+    "duplicates": 0,
+    "dtypes": {
+        "Transaction ID": "object",
+        "Item": "object",
+        "Quantity": "object",
+        "Price Per Unit": "object",
+        "Total Spent": "object",
+        "Payment Method": "object",
+        "Location": "object",
+        "Transaction Date": "object"
+    },
+    "unique_counts": {
+        "Transaction ID": 10000,
+        "Item": 10,
+        "Quantity": 7,
+        "Price Per Unit": 8,
+        "Total Spent": 19,
+        "Payment Method": 5,
+        "Location": 4,
+        "Transaction Date": 367
+    },
+    "issues_found": {
+        "Item": {
+            "contains_UNKNOWN": true
+        },
+        "Quantity": {
+            "non_numeric_values": [
+                "ERROR",
+                "UNKNOWN",
+                "NaN"
+            ],
+            "contains_UNKNOWN": true
+        },
+        "Price Per Unit": {
+            "non_numeric_values": [
+                "NaN",
+                "ERROR",
+                "UNKNOWN"
+            ],
+            "contains_UNKNOWN": true
+        },
+        "Total Spent": {
+            "non_numeric_values": [
+                "ERROR",
+                "NaN",
+                "UNKNOWN"
+            ],
+            "contains_UNKNOWN": true
+        },
+        "Payment Method": {
+            "contains_UNKNOWN": true
+        },
+        "Location": {
+            "contains_UNKNOWN": true
+        },
+        "Transaction Date": {
+            "contains_UNKNOWN": true
+        }
+    }
+}
