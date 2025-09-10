@@ -5,10 +5,10 @@ from pathlib import Path
 
 
 def generate_reports(input_file, md_out, json_out):
-    # === 1. Cargar dataset ===
+    # Cargar dataset
     df = pd.read_csv(input_file)
 
-    # === 2. Información básica ===
+    # Información
     n_rows, n_cols = df.shape
     basic_info = {
         "rows": n_rows,
@@ -16,32 +16,32 @@ def generate_reports(input_file, md_out, json_out):
         "column_names": df.columns.tolist()
     }
 
-    # === 3. Valores nulos ===
+    # Valores nulos
     missing = df.isna().sum().to_dict()
 
-    # === 4. Duplicados ===
+    # Duplicados
     duplicates = int(df.duplicated().sum())
 
-    # === 5. Tipos de datos detectados ===
+    # Tipos de datos detectados
     dtypes = df.dtypes.astype(str).to_dict()
 
-    # === 6. Valores únicos (para ver cardinalidad) ===
+    # Valores únicos (para ver cardinalidad)
     unique_counts = df.nunique().to_dict()
 
-    # === 7. Posibles problemas de contenido ===
+    # Posibles problemas de contenido
     issues = {}
     for col in df.columns:
-        # Ejemplo: valores no numéricos en columnas que parecen numéricas
+        # valores no numéricos en columnas que parecen numéricas
         if col in ["Quantity", "Price Per Unit", "Total Spent"]:
             non_numeric = df[~df[col].astype(str).str.replace(".", "", 1).str.isnumeric()][col].unique()
             issues[col] = {"non_numeric_values": non_numeric.tolist()}
 
-        # Ejemplo: valores desconocidos
+        # valores desconocidos
         if df[col].astype(str).str.upper().str.contains("UNKNOWN").any():
             issues[col] = issues.get(col, {})
             issues[col]["contains_UNKNOWN"] = True
 
-    # === 8. Guardar reporte en JSON ===
+    # Guardar reporte en JSON
     report = {
         "basic_info": basic_info,
         "missing_values": missing,
@@ -53,7 +53,7 @@ def generate_reports(input_file, md_out, json_out):
 
     Path(json_out).write_text(json.dumps(report, indent=4))
 
-    # === 9. Guardar reporte en Markdown ===
+    # Guardar reporte en MD
     md_lines = []
     md_lines.append(f"# Exploration Report – {Path(input_file).name}\n")
     md_lines.append("## Dataset Overview")
@@ -84,7 +84,7 @@ def generate_reports(input_file, md_out, json_out):
 
     Path(md_out).write_text("\n".join(md_lines))
 
-    print(f"✅ Reports generated:\n- {md_out}\n- {json_out}")
+    print(f"Reports generated:\n- {md_out}\n- {json_out}")
 
 
 if __name__ == "__main__":
